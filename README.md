@@ -2,8 +2,7 @@
 ### waves-lfo wrappers of xmm-client classes
 
 See [waves-lfo](https://github.com/wavesjs/waves-lfo) from the wavesjs library
-and [xmm-client](https://github.com/Ircam-RnD/xmm-client) documentations.  
-(Own documentation in progress).
+and [xmm-client](https://github.com/Ircam-RnD/xmm-client).  
 
 #### installation :
 

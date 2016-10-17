@@ -59,7 +59,8 @@ class PhraseRecorderLfo extends lfo.sinks.DataRecorder {
 	}
 
 	/**
-	 * Stop the current recording (makes the phrase available).
+	 * Stop the current recording.
+	 * (makes the phrase available via <code>getRecordedPhrase()</code>).
 	 */
 	stop() {
 		super.stop();
