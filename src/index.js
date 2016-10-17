@@ -1,3 +1,3 @@
-export { default as XmmGmmDecoderLfo } from './XmmGmmDecoder';
-export { default as XmmHhmmDecoderLfo } from './XmmHhmmDecoder';
-export { default as XmmPhraseRecorderLfo } from './XmmPhraseRecorder';
+export { default as GmmDecoderLfo } from './GmmDecoderLfo';
+export { default as HhmmDecoderLfo } from './HhmmDecoderLfo';
+export { default as PhraseRecorderLfo } from './PhraseRecorderLfo';

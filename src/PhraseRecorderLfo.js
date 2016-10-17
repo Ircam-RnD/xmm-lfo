@@ -1,8 +1,12 @@
 import * as lfo from 'waves-lfo';
-//import PhraseMaker from './xmm-phrase';
 import { PhraseMaker } from 'xmm-client';
 
-export default class XmmPhraseRecorder extends lfo.sinks.DataRecorder {
+/**
+ * Lfo class extending lfo.sinks.DataRecorder, using PhraseMaker from xmm-client
+ * to format the input data for xmm-node.
+ * @class
+ */
+export default class PhraseRecorderLfo extends lfo.sinks.DataRecorder {
 	constructor(options = {}) {
 		const defaults = {
 			separateArrays: true,
@@ -11,7 +15,6 @@ export default class XmmPhraseRecorder extends lfo.sinks.DataRecorder {
 			column_names: ['']
 		}
 		Object.assign(defaults, options);
-		//console.log('defaults : ' + defaults);
 		super(defaults);
 
 		this._phraseMaker = new PhraseMaker(this.params);
@@ -35,6 +38,10 @@ export default class XmmPhraseRecorder extends lfo.sinks.DataRecorder {
 			.catch((err) => console.error(err.stack));
 	}
 
+	/**
+	 * The current label of the last / currently being recorded phrase.
+	 * @type {String}
+	 */
 	get label() {
 		return this.phraseMaker.config.label;
 	}
@@ -52,12 +59,16 @@ export default class XmmPhraseRecorder extends lfo.sinks.DataRecorder {
 		this._phraseMaker.reset();
 	}
 
+	/** @private */
 	initialize(streamParams = {}) {
 		super.initialize(streamParams);
 		this._phraseMaker.config = { dimension: this.streamParams.frameSize };
 		this._phraseMaker.reset();
 	}
 
+	/**
+	 * Returns the latest recorded phrase.
+	 */
 	getRecordedPhrase() {
 		return this._phraseMaker.phrase;
 	}

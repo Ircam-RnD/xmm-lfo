@@ -2,11 +2,8 @@
 	"source": {
     "include": [
     	"README.md",
-    	"src/phrase",
-    	"src/gmm",
-    	"src/hhmm"
+    	"src"
     ],
-    "exclude": [ "src/utils" ],
     "includePattern": ".+\\.js(doc)?$",
     "excludePattern": "(^|\\/|\\\\)_"
 	},

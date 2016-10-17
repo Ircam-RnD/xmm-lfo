@@ -2,7 +2,7 @@ import * as lfo from 'waves-lfo';
 import assert from 'assert';
 import { HhmmDecoder } from 'xmm-client';
 
-export default class XmmHhmmDecoder extends lfo.core.BaseLfo {
+export default class HhmmDecoderLfo extends lfo.core.BaseLfo {
 	constructor(options = {}) {
 		const defaults = {
 			model: undefined,
