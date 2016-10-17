@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.6.1",
-    "waves-lfo": "github:wavesjs/waves-lfo#0.2.0",
+    "waves-lfo": "github:wavesjs/waves-lfo#v0.2.0",
     "xmm-client": "github:ircam-rnd/xmm-client"
   },
   "devDependencies": {
