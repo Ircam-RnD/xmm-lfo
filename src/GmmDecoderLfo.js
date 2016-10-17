@@ -2,7 +2,7 @@ import * as lfo from 'waves-lfo';
 //import assert from 'assert';
 import { GmmDecoder } from 'xmm-client';
 
-export default class GmmDecoderLfo extends lfo.core.BaseLfo {
+class GmmDecoderLfo extends lfo.core.BaseLfo {
 	constructor(options = {}) {
 		const defaults = {
 			model: undefined,
@@ -46,3 +46,5 @@ export default class GmmDecoderLfo extends lfo.core.BaseLfo {
 		return this._results;
 	}
 };
+
+export default GmmDecoderLfo;

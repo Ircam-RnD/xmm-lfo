@@ -6,7 +6,7 @@ import { PhraseMaker } from 'xmm-client';
  * to format the input data for xmm-node.
  * @class
  */
-export default class PhraseRecorderLfo extends lfo.sinks.DataRecorder {
+class PhraseRecorderLfo extends lfo.sinks.DataRecorder {
 	constructor(options = {}) {
 		const defaults = {
 			separateArrays: true,
@@ -73,3 +73,5 @@ export default class PhraseRecorderLfo extends lfo.sinks.DataRecorder {
 		return this._phraseMaker.phrase;
 	}
 }
+
+export default PhraseRecorderLfo;

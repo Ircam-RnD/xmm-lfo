@@ -4,32 +4,32 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _XmmGmmDecoder = require('./XmmGmmDecoder');
+var _GmmDecoderLfo = require('./GmmDecoderLfo');
 
-Object.defineProperty(exports, 'XmmGmmDecoderLfo', {
+Object.defineProperty(exports, 'GmmDecoderLfo', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_XmmGmmDecoder).default;
+    return _interopRequireDefault(_GmmDecoderLfo).default;
   }
 });
 
-var _XmmHhmmDecoder = require('./XmmHhmmDecoder');
+var _HhmmDecoderLfo = require('./HhmmDecoderLfo');
 
-Object.defineProperty(exports, 'XmmHhmmDecoderLfo', {
+Object.defineProperty(exports, 'HhmmDecoderLfo', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_XmmHhmmDecoder).default;
+    return _interopRequireDefault(_HhmmDecoderLfo).default;
   }
 });
 
-var _XmmPhraseRecorder = require('./XmmPhraseRecorder');
+var _PhraseRecorderLfo = require('./PhraseRecorderLfo');
 
-Object.defineProperty(exports, 'XmmPhraseRecorderLfo', {
+Object.defineProperty(exports, 'PhraseRecorderLfo', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_XmmPhraseRecorder).default;
+    return _interopRequireDefault(_PhraseRecorderLfo).default;
   }
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LmpzIl0sIm5hbWVzIjpbImRlZmF1bHQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7O2tEQUFTQSxPOzs7Ozs7Ozs7bURBQ0FBLE87Ozs7Ozs7OztzREFDQUEsTyIsImZpbGUiOiJpbmRleC5qcyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCB7IGRlZmF1bHQgYXMgWG1tR21tRGVjb2RlckxmbyB9IGZyb20gJy4vWG1tR21tRGVjb2Rlcic7XG5leHBvcnQgeyBkZWZhdWx0IGFzIFhtbUhobW1EZWNvZGVyTGZvIH0gZnJvbSAnLi9YbW1IaG1tRGVjb2Rlcic7XG5leHBvcnQgeyBkZWZhdWx0IGFzIFhtbVBocmFzZVJlY29yZGVyTGZvIH0gZnJvbSAnLi9YbW1QaHJhc2VSZWNvcmRlcic7Il19
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LmpzIl0sIm5hbWVzIjpbImRlZmF1bHQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7O2tEQUFTQSxPOzs7Ozs7Ozs7bURBQ0FBLE87Ozs7Ozs7OztzREFDQUEsTyIsImZpbGUiOiJpbmRleC5qcyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCB7IGRlZmF1bHQgYXMgR21tRGVjb2RlckxmbyB9IGZyb20gJy4vR21tRGVjb2Rlckxmbyc7XG5leHBvcnQgeyBkZWZhdWx0IGFzIEhobW1EZWNvZGVyTGZvIH0gZnJvbSAnLi9IaG1tRGVjb2Rlckxmbyc7XG5leHBvcnQgeyBkZWZhdWx0IGFzIFBocmFzZVJlY29yZGVyTGZvIH0gZnJvbSAnLi9QaHJhc2VSZWNvcmRlckxmbyc7Il19
