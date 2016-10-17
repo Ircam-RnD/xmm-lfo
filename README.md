@@ -8,10 +8,9 @@ and [xmm-client](https://github.com/Ircam-RnD/xmm-client) documentations.
 
 `npm install [--save] Ircam-RnD/xmm-lfo`
 
-#### example :
+#### es6 example :
 
 ```JavaScript
-// es6 :
 import * as lfo from 'waves-lfo';
 import { PhraseRecorderLfo, HhmmRecorderLfo } from 'xmm-lfo';
 
