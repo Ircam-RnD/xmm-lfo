@@ -50,13 +50,20 @@ class PhraseRecorderLfo extends lfo.sinks.DataRecorder {
 		this._phraseMaker.config = { label: label };
 	}
 
+	/**
+	 * Start recording a phrase from the input stream.
+	 */
 	start() {
+		this._phraseMaker.reset(); // is this better here than in stop() ?
 		super.start();
 	}
 
+	/**
+	 * Stop the current recording (makes the phrase available).
+	 */
 	stop() {
 		super.stop();
-		this._phraseMaker.reset();
+		//this._phraseMaker.reset();
 	}
 
 	/** @private */

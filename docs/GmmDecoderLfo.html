@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Documentation - Class: PhraseRecorderLfo</title>
+    <title>Documentation - Class: GmmDecoderLfo</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -20,7 +20,7 @@
 
     <!-- if home page assume a title is already present in README -->
     
-    <h1 class="page-title">Class: PhraseRecorderLfo</h1>
+    <h1 class="page-title">Class: GmmDecoderLfo</h1>
     
 
     
@@ -32,10 +32,14 @@
 
 <header>
     
-        <h2>PhraseRecorderLfo</h2>
+        <h2>GmmDecoderLfo</h2>
         
-            <div class="class-description"><p>Lfo class extending lfo.sinks.DataRecorder, using PhraseMaker from xmm-client
-to format the input data for xmm-node.</p></div>
+            <div class="class-description"><p>Lfo class loading GMM models created by the xmm library to process an input
+stream of vectors (models must have been trained from the same input stream).
+As the results of the classification / regression are more complex than a
+simple vector, a callback function can be passed to the constructor to handle
+them, or they can alternatively be queried via the readonly filterResults
+property.</p></div>
         
     
 </header>
@@ -49,7 +53,7 @@ to format the input data for xmm-node.</p></div>
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="PhraseRecorderLfo"><span class="type-signature"></span>new PhraseRecorderLfo<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="GmmDecoderLfo"><span class="type-signature"></span>new GmmDecoderLfo<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -96,7 +100,7 @@ to format the input data for xmm-node.</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PhraseRecorderLfo.js.html">PhraseRecorderLfo.js</a>, <a href="PhraseRecorderLfo.js.html#line9">line 9</a>
+        <a href="GmmDecoderLfo.js.html">GmmDecoderLfo.js</a>, <a href="GmmDecoderLfo.js.html#line14">line 14</a>
     </li></ul></dd>
     
 
@@ -140,13 +144,13 @@ to format the input data for xmm-node.</p></div>
 
         
             
-<h4 class="name" id="label"><span class="type-signature"></span>label<span class="type-signature"> :String</span></h4>
+<h4 class="name" id="filterResults"><span class="type-signature">(readonly) </span>filterResults<span class="type-signature"> :Object</span></h4>
 
 
 
 
 <div class="description">
-    <p>The current label of the last / currently being recorded phrase.</p>
+    <p>The results of the filtering process. Updated on each new incoming vector.</p>
 </div>
 
 
@@ -155,7 +159,7 @@ to format the input data for xmm-node.</p></div>
     <ul>
         <li>
             
-<span class="param-type">String</span>
+<span class="param-type">Object</span>
 
 
         </li>
@@ -194,7 +198,7 @@ to format the input data for xmm-node.</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PhraseRecorderLfo.js.html">PhraseRecorderLfo.js</a>, <a href="PhraseRecorderLfo.js.html#line45">line 45</a>
+        <a href="GmmDecoderLfo.js.html">GmmDecoderLfo.js</a>, <a href="GmmDecoderLfo.js.html#line76">line 76</a>
     </li></ul></dd>
     
 
@@ -211,33 +215,27 @@ to format the input data for xmm-node.</p></div>
 
 
         
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
             
+<h4 class="name" id="likelihoodWindow"><span class="type-signature"></span>likelihoodWindow<span class="type-signature"> :Number</span></h4>
 
-    
-
-    <h4 class="name" id="getRecordedPhrase"><span class="type-signature"></span>getRecordedPhrase<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
 
 
 
 <div class="description">
-    <p>Returns the latest recorded phrase.</p>
+    <p>The current likelihood window size.</p>
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Number</span>
 
 
-
-
-
+        </li>
+    </ul>
 
 
 
@@ -272,7 +270,7 @@ to format the input data for xmm-node.</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PhraseRecorderLfo.js.html">PhraseRecorderLfo.js</a>, <a href="PhraseRecorderLfo.js.html#line79">line 79</a>
+        <a href="GmmDecoderLfo.js.html">GmmDecoderLfo.js</a>, <a href="GmmDecoderLfo.js.html#line63">line 63</a>
     </li></ul></dd>
     
 
@@ -288,38 +286,28 @@ to format the input data for xmm-node.</p></div>
 
 
 
-
-
-
-
-
-
-
-
-
-
         
             
+<h4 class="name" id="model"><span class="type-signature"></span>model<span class="type-signature"> :Object</span></h4>
 
-    
-
-    <h4 class="name" id="start"><span class="type-signature"></span>start<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
 
 
 
 <div class="description">
-    <p>Start recording a phrase from the input stream.</p>
+    <p>The current xmm model used for decoding.</p>
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
 
 
-
-
-
+        </li>
+    </ul>
 
 
 
@@ -354,7 +342,7 @@ to format the input data for xmm-node.</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PhraseRecorderLfo.js.html">PhraseRecorderLfo.js</a>, <a href="PhraseRecorderLfo.js.html#line56">line 56</a>
+        <a href="GmmDecoderLfo.js.html">GmmDecoderLfo.js</a>, <a href="GmmDecoderLfo.js.html#line50">line 50</a>
     </li></ul></dd>
     
 
@@ -370,99 +358,9 @@ to format the input data for xmm-node.</p></div>
 
 
 
-
-
-
-
-
-
-
-
-
-
         
-            
-
     
 
-    <h4 class="name" id="stop"><span class="type-signature"></span>stop<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Stop the current recording (makes the phrase available).</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PhraseRecorderLfo.js.html">PhraseRecorderLfo.js</a>, <a href="PhraseRecorderLfo.js.html#line64">line 64</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
     
 
     

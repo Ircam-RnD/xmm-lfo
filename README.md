@@ -1,8 +1,9 @@
-## xmm-lfo
+# xmm-lfo
 ### waves-lfo wrappers of xmm-client classes
 
 See [waves-lfo](https://github.com/wavesjs/waves-lfo) from the wavesjs library
 and [xmm-client](https://github.com/Ircam-RnD/xmm-client) documentations.  
+(Own documentation in progress).
 
 #### installation :
 
@@ -49,9 +50,9 @@ eventIn.start();
 xmmRecorder.start();
 xmmRecorder.stop();
 
-// when stop() is called, a promise updates the internal phrase that can then
-// be obtained by calling :
-var phrase = xmmRecorder.getRecordedPhrase();
+// when stop() is called, a promise updates the internal phrase that can
+// be obtained by calling getRecordedPhrase() :
+let phrase = xmmRecorder.getRecordedPhrase();
 
 // once a model has been trained by xmm-node from the recorded phrases, it can
 // be passed to the decoder like this :
