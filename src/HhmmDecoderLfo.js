@@ -16,7 +16,8 @@ class HhmmDecoderLfo extends lfo.core.BaseLfo {
 	constructor(options = {}) {
 		const defaults = {
 			model: undefined,
-			likelihoodWindow: 1,
+			likelihoodWindow: 20,
+			output: 'likelihoods', // ['likelihoods', 'likelihoodsProgress', 'regressions', ... ?]
 			ctx: undefined,
 			callback: undefined
 		}
@@ -47,6 +48,13 @@ class HhmmDecoderLfo extends lfo.core.BaseLfo {
 
 			this.output();
 		});
+	}
+
+	/**
+	 * Resets the intermediate results of the estimation.
+	 */
+	reset() {
+		this._decoder.reset();
 	}
 
 	/**
