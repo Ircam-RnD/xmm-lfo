@@ -60,6 +60,6 @@ hhmmDecoder.model = someModelFromXmmNode;
 
 #### credits :
 
-This library has been developed by the ISMM team at IRCAM, within the context of the RAPID-MIX project, funded by the European Union’s Horizon 2020 research and innovation programme.
-Original XMM code authored by Jules Françoise, ported to JS and wrapped into LFO operators by Joseph Larralde.
+This library has been developed by the ISMM team at IRCAM, within the context of the RAPID-MIX project, funded by the European Union’s Horizon 2020 research and innovation programme.  
+Original XMM code authored by Jules Françoise, ported to JS and wrapped into LFO operators by Joseph Larralde.  
 See [waves-lfo](https://github.com/wavejs/waves-lfo) for LFO credits.
