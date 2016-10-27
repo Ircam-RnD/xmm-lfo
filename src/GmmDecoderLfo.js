@@ -15,7 +15,8 @@ class GmmDecoderLfo extends lfo.core.BaseLfo {
 	constructor(options = {}) {
 		const defaults = {
 			model: undefined,
-			likelihoodWindow: 1,
+			likelihoodWindow: 20,
+			output: 'likelihoods', // ['likelihoods' | 'regression']
 			callback: undefined
 		};
 		super(defaults, options);

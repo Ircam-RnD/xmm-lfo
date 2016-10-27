@@ -2,7 +2,7 @@
 ### waves-lfo wrappers of xmm-client classes
 
 See [waves-lfo](https://github.com/wavesjs/waves-lfo) from the wavesjs library
-and [xmm-client](https://github.com/Ircam-RnD/xmm-client).  
+and [xmm-client](https://github.com/Ircam-RnD/xmm-client).
 
 #### installation :
 
@@ -57,3 +57,9 @@ let phrase = xmmRecorder.getRecordedPhrase();
 // be passed to the decoder like this :
 hhmmDecoder.model = someModelFromXmmNode;
 ```
+
+#### about :
+
+This library has been developed by the ISMM team at IRCAM, within the context of the RAPID-MIX project, funded by the European Union’s Horizon 2020 research and innovation programme.
+Original XMM code authored by Jules Françoise, ported to JS and wrapped into LFO operators by Joseph Larralde.
+See [waves-lfo](https://github.com/wavejs/waves-lfo) for LFO credits.
