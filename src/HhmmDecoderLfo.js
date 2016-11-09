@@ -81,12 +81,12 @@ class HhmmDecoderLfo extends BaseLfo {
   /** @private */
   processVector(frame) {
     this._decoder.filter(frame, (err, res) => {
-      const callback = this.params.get('callback');
-      const resData = res.likelihoods;
-      const data = this.frame.data;
-      const frameSize = this.streamParams.frameSize;
+      if (err === null) {
+        const callback = this.params.get('callback');
+        const resData = res.likelihoods;
+        const data = this.frame.data;
+        const frameSize = this.streamParams.frameSize;
 
-      if (err == null) {
         for (let i = 0; i < frameSize; i++) {
           data[i] = resData[i];
         }
