@@ -20,7 +20,6 @@ const definitions = {
     default: 'likelihoods',
     list: ['likelihoods', 'regression'],
     constant: true,
-    // metas: { kind: 'static' },
   },
   callback: {
     type: 'any',

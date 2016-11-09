@@ -28,7 +28,7 @@ const definitions = {
  * Lfo class using PhraseMaker class from xmm-client
  * to record input data and format it for xmm-node.
  */
-class PhraseRecorder extends BaseLfo {
+class PhraseRecorderLfo extends BaseLfo {
   constructor(options = {}) {
     super(definitions, options);
 
