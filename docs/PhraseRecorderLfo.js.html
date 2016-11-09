@@ -30,88 +30,126 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import * as lfo from 'waves-lfo';
+            <pre class="prettyprint source linenums"><code>import { BaseLfo } from 'waves-lfo/common/core/BaseLfo';
 import { PhraseMaker } from 'xmm-client';
 
+const definitions = {
+  bimodal: {
+    type: 'boolean',
+    default: false,
+    constant: true
+  },
+  dimensionInput: {
+    type: 'integer',
+    default: 0,
+    constant: true
+  },
+  columnNames: {
+    type: 'any',
+    default: [''],
+    constant: true
+  },
+};
+
+// uncomment this and add to other xmm-lfo's when lfo is exposed in /common as well
+// or use client ? (it's very likely that we won't run these lfo's server-side)
+// if (lfo.version &lt; '1.0.0')
+//  throw new Error('')
+
 /**
- * Lfo class extending lfo.sinks.DataRecorder, using PhraseMaker from xmm-client
- * to format the input data for xmm-node.
- * @class
+ * Lfo class using PhraseMaker class from xmm-client
+ * to record input data and format it for xmm-node.
  */
-class PhraseRecorderLfo extends lfo.sinks.DataRecorder {
-	constructor(options = {}) {
-		const defaults = {
-			separateArrays: true,
-			bimodal: false,
-			dimension_input: 0,
-			column_names: ['']
-		}
-		Object.assign(defaults, options);
-		super(defaults);
+class PhraseRecorder extends BaseLfo {
+  constructor(options = {}) {
+    super(definitions, options);
 
-		this._phraseMaker = new PhraseMaker(this.params);
+    this._phraseMaker = new PhraseMaker({
+      bimodal: this.params.get('bimodal'),
+      dimensionInput: this.params.get('dimensionInput'),
+      columnNames: this.params.get('columnNames'),
+    });
 
-		this.updatePhrase = ((data) => {
-			for (let vecid in data.data) {
-				const obs = [];
-				for (let id in data.data[vecid]) {
-					obs.push(data.data[vecid][id]);
-				}
-				//console.log(obs);
-				this._phraseMaker.addObservation(obs);
-			}
-			this.retrieve()
-				.then(this.updatePhrase.bind(this))
-				.catch((err) => console.error(err.stack));
-		});
+    this._isStarted = false;
+  }
 
-		this.retrieve()
-			.then(this.updatePhrase.bind(this))
-			.catch((err) => console.error(err.stack));
-	}
+  /**
+   * Get the current label of the last / currently being recorded phrase.
+   * @returns {String}.
+   */
+  getPhraseLabel() {
+    return this._phraseMaker.getConfig()['label'];
+  }
 
-	/**
-	 * The current label of the last / currently being recorded phrase.
-	 * @type {String}
-	 */
-	get label() {
-		return this.phraseMaker.config.label;
-	}
+  /**
+   * Set the current label of the last / currently being recorded phrase.
+   * @param {String} label - The label.
+   */
+  setPhraseLabel(label) {
+    this._phraseMaker.setConfig({ label: label });
+  }
 
-	set label(label) {
-		this._phraseMaker.config = { label: label };
-	}
+  /**
+   * Return the latest recorded phrase.
+   * @returns {XmmPhrase}
+   */
+  getRecordedPhrase() {
+    // this.stop();
+    return this._phraseMaker.getPhrase();
+  }
 
-	/**
-	 * Start recording a phrase from the input stream.
-	 */
-	start() {
-		this._phraseMaker.reset(); // is this better here than in stop() ?
-		super.start();
-	}
+  /**
+   * Start recording a phrase from the input stream.
+   */
+  start() {
+    this._phraseMaker.reset();
+    this._isStarted = true;
+  }
 
-	/**
-	 * Stop the current recording.
-	 * (makes the phrase available via &lt;code>getRecordedPhrase()&lt;/code>).
-	 */
-	stop() {
-		super.stop();
-		//this._phraseMaker.reset();
-	}
+  /**
+   * Stop the current recording.
+   * (makes the phrase available via &lt;code>getRecordedPhrase()&lt;/code>).
+   */
+  stop() {
+    this._isStarted = false;
+  }
 
-	/** @private */
-	initialize(streamParams = {}) {
-		super.initialize(streamParams);
-		this._phraseMaker.config = { dimension: this.streamParams.frameSize };
-		this._phraseMaker.reset();
-	}
+  /** @private */
+  onParamUpdate(name, value, metas) {
+    super.onParamUpdate(name, value, metas);
 
-	/**
-	 * Returns the latest recorded phrase.
-	 */
-	getRecordedPhrase() {
-		return this._phraseMaker.phrase;
-	}
+    const config = {};
+    config[name] = value;
+    this._phraseMaker.setConfig(config);
+  }
+
+  /** @private */
+  processStreamParams(prevStreamParams = {}) {
+    this.prepareStreamParams(prevStreamParams);
+
+    this._phraseMaker.setConfig({ dimension: this.streamParams.frameSize });
+    this._phraseMaker.reset();
+
+    this.propagateStreamParams();
+  }
+
+  /** @private */
+  processVector(frame) {
+    if (!this._isStarted) {
+      return;
+    }
+
+    // const { data } = frame;
+    const frameSize = this.streamParams.frameSize;
+    const inData = frame.data;
+    const outData = this.frame.data;
+
+    for (let i = 0; i &lt; frameSize; i++) {
+      outData[i] = inData[i];
+    }
+
+    this._phraseMaker.addObservation(inData);
+  }
 }
 
 export default PhraseRecorderLfo;</code></pre>
@@ -124,13 +162,13 @@ export default PhraseRecorderLfo;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="GmmDecoderLfo.html">GmmDecoderLfo</a></li><li><a href="HhmmDecoderLfo.html">HhmmDecoderLfo</a></li><li><a href="PhraseRecorderLfo.html">PhraseRecorderLfo</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="GmmDecoderLfo.html">GmmDecoderLfo</a></li><li><a href="HhmmDecoderLfo.html">HhmmDecoderLfo</a></li><li><a href="PhraseRecorder.html">PhraseRecorder</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Oct 27 2016 18:20:30 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Nov 09 2016 01:39:36 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>

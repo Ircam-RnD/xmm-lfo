@@ -1,6 +1,34 @@
-import * as lfo from 'waves-lfo';
-//import assert from 'assert';
+import { BaseLfo } from 'waves-lfo/common/core/BaseLfo';
 import { HhmmDecoder } from 'xmm-client';
+
+
+const definitions = {
+  model: {
+    type: 'any',
+    default: null,
+    nullable: true,
+    metas: { kind: 'static' },
+  }, 
+  likelihoodWindow: {
+    type: 'integer',
+    default: 20,
+    min: 1,
+    max: 1e30,
+  },
+  output: {
+    type: 'enum',
+    default: 'likelihoods',
+    list: ['likelihoods', 'regression'],
+    constant: true,
+  },
+  callback: {
+    type: 'any',
+    default: null,
+    nullable: true,
+    metas: { kind: 'dynamic' },
+  }
+};
+
 
 /**
  * Lfo class loading Hierarchical HMM models created by the xmm library to
@@ -12,40 +40,11 @@ import { HhmmDecoder } from 'xmm-client';
  * readonly filterResults property.
  * @class
  */
-class HhmmDecoderLfo extends lfo.core.BaseLfo {
+class HhmmDecoderLfo extends BaseLfo {
   constructor(options = {}) {
-    const defaults = {
-      model: undefined,
-      likelihoodWindow: 20,
-      output: 'likelihoods', // ['likelihoods' | 'regression']
-      callback: undefined
-    }
-    super(defaults, options);
+    super(definitions, options);
+
     this._decoder = new HhmmDecoder(this.params.likelihoodWindow);
-    this._results = null;
-    this._callback = this.params.callback;
-  }
-
-  /** @private */
-  process(time, frame, metaData) {
-    this.time = time;
-    this.metaData = metaData;
-    this._decoder.filter(frame, (err, res) => {
-      //assert.equal(null, err);
-      if (err == null) {
-        this._results = res;
-        for (let i = 0; i < this._decoder.nbClasses; i++) {
-          this.outFrame[i] = res.likelihoods[i];
-        }
-        if (this._callback) {
-          this._callback(res);
-        }
-      } else {
-        console.error(err);
-      }
-
-      this.output();
-    });
   }
 
   /**
@@ -55,38 +54,56 @@ class HhmmDecoderLfo extends lfo.core.BaseLfo {
     this._decoder.reset();
   }
 
-  /**
-   * The current xmm model used for decoding.
-   * @type {Object}
-   */
-  get model() {
-    return this._decoder.model;
+  /** @private */
+  onParamUpdate(name, value, metas) {
+    super.onParamUpdate(name, value, metas);
+
+    if (name === 'likelihoodWindow') {
+      this._decoder.setLikelihoodWindow(value);
+    }
   }
 
-  set model(model) {
-    this._decoder.model = model;
-    this.initialize({ frameSize: this._decoder.nbClasses });
+  /** @private */
+  processStreamParams(prevStreamParams = {}) {
+    this.prepareStreamParams(prevStreamParams);
+
+    this._decoder.model = this.params.get('model');
+
+    if (this.params.get('output') === 'likelihoods') {
+      this.streamParams.frameSize = this._decoder.nbClasses;
+    } else { // === 'regression'
+      this.streamParams.frameSize = this._decoder.regressionSize;
+    }
+
+    this.propagateStreamParams();
   }
 
-  /**
-   * The current likelihood window size.
-   * @type {Number}
-   */
-  get likelihoodWindow() {
-    return this._decoder.likelihoodWindow;
+  /** @private */
+  processVector(frame) {
+    this._decoder.filter(frame, (err, res) => {
+      const callback = this.params.get('callback');
+      const resData = res.likelihoods;
+      const data = this.frame.data;
+      const frameSize = this.streamParams.frameSize;
+
+      if (err == null) {
+        for (let i = 0; i < frameSize; i++) {
+          data[i] = resData[i];
+        }
+        
+        if (callback) {
+          callback(res);
+        }
+      }
+
+      this.propagateFrame();
+    });
   }
 
-  set likelihoodWindow(windowSize) {
-    this._decoder.likelihoodWindow = windowSize;
-  }
-
-  /**
-   * The results of the filtering process. Updated on each new incoming vector.
-   * @type {Object}
-   * @readonly
-   */
-  get filterResults() {
-    return this._results;
+  /** @private */
+  processFrame(frame) {
+    this.prepareFrame(frame);
+    this.processFunction(frame);
   }
 };
 

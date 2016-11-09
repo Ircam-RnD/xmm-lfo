@@ -1,6 +1,6 @@
 {
   "name": "xmm-lfo",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "waves-lfo wrappers of xmm-client classes",
   "main": "dist/index.js",
   "license": "GPL-3.0",
@@ -16,7 +16,7 @@
     "transpile": "node ./bin/runner --transpile",
     "watch": "node ./bin/runner --watch",
     "docs": "jsdoc -c conf.json",
-    "test": "babel-tape-runner \"tests/*.js\""
+    "tests": "babel-tape-runner \"tests/*.js\""
   },
   "jshintConfig": {
     "esnext": true,
@@ -31,8 +31,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.6.1",
-    "waves-lfo": "github:wavesjs/waves-lfo#v0.2.0",
-    "xmm-client": "github:ircam-rnd/xmm-client"
+    "xmm-client": "ircam-rnd/xmm-client"
   },
   "devDependencies": {
     "babel-core": "^6.6.5",
@@ -44,7 +43,7 @@
     "browserify": "^13.0.0",
     "colors": "^1.1.2",
     "fs-extra": "^0.26.5",
-    "jsdoc-template": "github:collective-soundworks/jsdoc-template",
+    "jsdoc-template": "ircam-jstools/jsdoc-template",
     "ora": "^0.2.0",
     "tape": "^4.6.0",
     "uglify-js": "^2.6.2",
