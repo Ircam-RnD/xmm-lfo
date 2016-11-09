@@ -83,11 +83,13 @@ class GmmDecoderLfo extends BaseLfo {
       const frameSize = this.streamParams.frameSize;
 
       if (err == null) {
-        for (let i = 0; i < frameSize; i++) 
+        for (let i = 0; i < frameSize; i++) {
           data[i] = resData[i];
+        }
         
-        if (callback) 
+        if (callback) {
           callback(res);
+        }
       }
 
       this.propagateFrame();
