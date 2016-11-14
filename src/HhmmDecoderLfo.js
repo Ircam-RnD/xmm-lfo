@@ -41,7 +41,7 @@ const definitions = {
  * readonly filterResults property.
  * @class
  */
-export default class HhmmDecoderLfo extends BaseLfo {
+class HhmmDecoderLfo extends BaseLfo {
   constructor(options = {}) {
     super(definitions, options);
 
@@ -139,4 +139,4 @@ export default class HhmmDecoderLfo extends BaseLfo {
   // }
 };
 
-// export default HhmmDecoderLfo;
+export default HhmmDecoderLfo;

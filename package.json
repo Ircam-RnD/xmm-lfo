@@ -12,9 +12,7 @@
   "private": true,
   "homepage": "https://github.com/Ircam-RnD/xmm-lfo",
   "scripts": {
-    "bundle": "node ./bin/runner --bundle",
     "transpile": "node ./bin/runner --transpile",
-    "watch": "node ./bin/runner --watch",
     "docs": "jsdoc -c conf.json",
     "tests": "babel-tape-runner \"tests/*.js\""
   },
@@ -31,7 +29,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.6.1",
-    "xmm-client": "github:ircam-rnd/xmm-client#develop"
+    "xmm-client": "ircam-rnd/xmm-client#v0.3.0"
   },
   "devDependencies": {
     "babel-core": "^6.6.5",
@@ -48,6 +46,6 @@
     "tape": "^4.6.0",
     "uglify-js": "^2.6.2",
     "watch": "^0.17.1",
-    "waves-lfo": "wavesjs/waves-lfo"
+    "waves-lfo": "wavesjs/waves-lfo#v1.0.0"
   }
 }

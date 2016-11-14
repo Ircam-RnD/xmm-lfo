@@ -43,7 +43,7 @@ const definitions = {
  * @param {Object} [options.model=null] - Model comming from ...
  * @param {Object} [options.likelihoodWindow=20] - Number of lilikelihood
  */
-export default class GmmDecoderLfo extends BaseLfo {
+class GmmDecoderLfo extends BaseLfo {
   constructor(options = {}) {
     super(definitions, options);
 
@@ -135,4 +135,4 @@ export default class GmmDecoderLfo extends BaseLfo {
   // }
 };
 
-// export default GmmDecoderLfo;
+export default GmmDecoderLfo;
