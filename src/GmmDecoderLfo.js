@@ -81,38 +81,58 @@ export default class GmmDecoderLfo extends BaseLfo {
       inArray[i] = frame.data[i];
     }
 
-    this._decoder.filter(inArray, (err, res) => {
-      if (err === null) {
-        const callback = this.params.get('callback');
+    // this._decoder.filter(inArray, (err, res) => {
+    //   if (err === null) {
+    //     const callback = this.params.get('callback');
 
-        let resData;
-        if (this.params.get('output') === 'likelihoods') {
-          resData = res.likelihoods;
-        } else {
-          resData = res.regression; // this is not implemented in xmm-client !!!
-        }
+    //     let resData;
+    //     if (this.params.get('output') === 'likelihoods') {
+    //       resData = res.likelihoods;
+    //     } else {
+    //       resData = res.regression; // this is not implemented in xmm-client !!!
+    //     }
 
-        const data = this.frame.data;
-        const frameSize = this.streamParams.frameSize;
+    //     const data = this.frame.data;
+    //     const frameSize = this.streamParams.frameSize;
 
-        for (let i = 0; i < frameSize; i++) {
-          data[i] = resData[i];
-        }
+    //     for (let i = 0; i < frameSize; i++) {
+    //       data[i] = resData[i];
+    //     }
         
-        if (callback) {
-          callback(res);
-        }
-      }
+    //     if (callback) {
+    //       callback(res);
+    //     }
+    //   }
 
-      this.propagateFrame();
-    });
+    //   this.propagateFrame();
+    // });
+
+    const res = this._decoder.filter(inArray);
+    const callback = this.params.get('callback');
+    let outData;
+    if (this.params.get('output') === 'likelihoods') {
+      outData = res.likelihoods;
+    } else {
+      outData = res.outputValues;
+    }
+
+    const data = this.frame.data;
+    const frameSize = this.streamParams.frameSize;
+
+    for (let i = 0; i < frameSize; i++) {
+      data[i] = outData[i];
+    }
+    
+    if (callback) {
+      callback(res);
+    }
   }
 
   /** @private */
-  processFrame(frame) {
-    this.prepareFrame(frame);
-    this.processFunction(frame);
-  }
+  // processFrame(frame) {
+  //   this.prepareFrame(frame);
+  //   this.processFunction(frame);
+  // }
 };
 
 // export default GmmDecoderLfo;
