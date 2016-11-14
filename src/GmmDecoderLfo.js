@@ -1,4 +1,5 @@
 import BaseLfo from 'waves-lfo/common/core/BaseLfo';
+// import * as lfo from 'waves-lfo/client';
 import { GmmDecoder } from 'xmm-client';
 
 
@@ -42,7 +43,7 @@ const definitions = {
  * @param {Object} [options.model=null] - Model comming from ...
  * @param {Object} [options.likelihoodWindow=20] - Number of lilikelihood
  */
-class GmmDecoderLfo extends BaseLfo {
+export default class GmmDecoderLfo extends BaseLfo {
   constructor(options = {}) {
     super(definitions, options);
 
@@ -75,10 +76,22 @@ class GmmDecoderLfo extends BaseLfo {
 
   /** @private */
   processVector(frame) {
-    this._decoder.filter(frame, (err, res) => {
+    const inArray = new Array(frame.data.length);
+    for (let i = 0; i < inArray.length; i++) {
+      inArray[i] = frame.data[i];
+    }
+
+    this._decoder.filter(inArray, (err, res) => {
       if (err === null) {
         const callback = this.params.get('callback');
-        const resData = res.likelihoods;
+
+        let resData;
+        if (this.params.get('output') === 'likelihoods') {
+          resData = res.likelihoods;
+        } else {
+          resData = res.regression; // this is not implemented in xmm-client !!!
+        }
+
         const data = this.frame.data;
         const frameSize = this.streamParams.frameSize;
 
@@ -102,4 +115,4 @@ class GmmDecoderLfo extends BaseLfo {
   }
 };
 
-export default GmmDecoderLfo;
+// export default GmmDecoderLfo;

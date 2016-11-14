@@ -1,4 +1,5 @@
 import BaseLfo from 'waves-lfo/common/core/BaseLfo';
+// import * as lfo from 'waves-lfo/client';
 import { HhmmDecoder } from 'xmm-client';
 
 
@@ -40,11 +41,11 @@ const definitions = {
  * readonly filterResults property.
  * @class
  */
-class HhmmDecoderLfo extends BaseLfo {
+export default class HhmmDecoderLfo extends BaseLfo {
   constructor(options = {}) {
     super(definitions, options);
 
-    this._decoder = new HhmmDecoder(this.params.likelihoodWindow);
+    this._decoder = new HhmmDecoder(this.params.get('likelihoodWindow'));
   }
 
   /**
@@ -59,7 +60,7 @@ class HhmmDecoderLfo extends BaseLfo {
     super.onParamUpdate(name, value, metas);
 
     if (name === 'likelihoodWindow') {
-      this._decoder.setLikelihoodWindow(value);
+      this._decoder.likelihoodWindow = value;
     }
   }
 
@@ -68,6 +69,7 @@ class HhmmDecoderLfo extends BaseLfo {
     this.prepareStreamParams(prevStreamParams);
 
     this._decoder.model = this.params.get('model');
+    console.log(this._decoder.model);
 
     if (this.params.get('output') === 'likelihoods') {
       this.streamParams.frameSize = this._decoder.nbClasses;
@@ -80,9 +82,20 @@ class HhmmDecoderLfo extends BaseLfo {
 
   /** @private */
   processVector(frame) {
-    this._decoder.filter(frame, (err, res) => {
+    const inArray = new Array(frame.data.length);
+    for (let i = 0; i < inArray.length; i++) {
+      inArray[i] = frame.data[i];
+    }
+
+    this._decoder.filter(inArray, (err, res) => {
       if (err === null) {
         const callback = this.params.get('callback');
+        // let resData;
+        // if (this.params.get('output') === 'likelihoods') {
+        //   resData = res.likelihoods;
+        // } else { // === 'regression'
+        //   resData = res.outputValues;
+        // }
         const resData = res.likelihoods;
         const data = this.frame.data;
         const frameSize = this.streamParams.frameSize;
@@ -107,4 +120,4 @@ class HhmmDecoderLfo extends BaseLfo {
   }
 };
 
-export default HhmmDecoderLfo;
+// export default HhmmDecoderLfo;

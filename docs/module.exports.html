@@ -34,8 +34,298 @@
     
         <h2>exports</h2>
         
-            <div class="class-description"><p>Lfo class extending lfo.sinks.DataRecorder, using PhraseMaker from xmm-client
-to format the input data for xmm-node.</p></div>
+            <div class="class-description"><p>Lfo class loading GMM models created by the xmm library to process an input
+stream of vectors (models must have been trained from the same input stream).
+As the results of the classification / regression are more complex than a
+simple vector, a callback function can be passed to the constructor to handle
+them, or they can alternatively be queried via the readonly filterResults
+property.</p></div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name" id="exports"><span class="type-signature"></span>new exports<span class="signature">(options)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Override defaults.</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>model</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last"><p>Model comming from ...</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>likelihoodWindow</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    20
+                
+                </td>
+            
+
+            <td class="description last"><p>Number of lilikelihood</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GmmDecoderLfo.js.html">GmmDecoderLfo.js</a>, <a href="GmmDecoderLfo.js.html#line46">line 46</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>exports</h2>
+        
+            <div class="class-description"><p>Lfo class loading Hierarchical HMM models created by the xmm library to
+process an input stream of vectors (models must have been trained from the
+same input stream).
+As the results of the classification / following / regression are more
+complex than a simple vector, a callback function can be passed to the
+constructor to handle them, or they can alternatively be queried via the
+readonly filterResults property.</p></div>
         
     
 </header>
@@ -96,7 +386,131 @@ to format the input data for xmm-node.</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PhraseRecorderLfo.js.html">PhraseRecorderLfo.js</a>, <a href="PhraseRecorderLfo.js.html#line9">line 9</a>
+        <a href="HhmmDecoderLfo.js.html">HhmmDecoderLfo.js</a>, <a href="HhmmDecoderLfo.js.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>exports</h2>
+        
+            <div class="class-description"><p>Lfo class using PhraseMaker class from xmm-client
+to record input data and format it for xmm-node.</p></div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name" id="exports"><span class="type-signature"></span>new exports<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="PhraseRecorderLfo.js.html">PhraseRecorderLfo.js</a>, <a href="PhraseRecorderLfo.js.html#line32">line 32</a>
     </li></ul></dd>
     
 
@@ -158,7 +572,9 @@ to format the input data for xmm-node.</p></div>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Oct 17 2016 11:47:12 GMT+0200 (CEST)
+    
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Nov 14 2016 18:06:00 GMT+0100 (CET)
+    
 </footer>
 
 <script> prettyPrint(); </script>

@@ -1,4 +1,5 @@
 import BaseLfo from 'waves-lfo/common/core/BaseLfo';
+// import * as lfo from 'waves-lfo/client';
 import { PhraseMaker } from 'xmm-client';
 
 const definitions = {
@@ -28,7 +29,7 @@ const definitions = {
  * Lfo class using PhraseMaker class from xmm-client
  * to record input data and format it for xmm-node.
  */
-class PhraseRecorderLfo extends BaseLfo {
+export default class PhraseRecorderLfo extends BaseLfo {
   constructor(options = {}) {
     super(definitions, options);
 
@@ -63,7 +64,8 @@ class PhraseRecorderLfo extends BaseLfo {
    */
   getRecordedPhrase() {
     // this.stop();
-    return this._phraseMaker.getPhrase();
+    console.log(this._phraseMaker.phrase);
+    return this._phraseMaker.phrase;
   }
 
   /**
@@ -115,9 +117,15 @@ class PhraseRecorderLfo extends BaseLfo {
     for (let i = 0; i < frameSize; i++) {
       outData[i] = inData[i];
     }
+    //console.log(outData);
 
-    this._phraseMaker.addObservation(inData);
+    const inArray = new Array(this.streamParams.frameSize);
+    for (let i = 0; i < inArray.length; i++) {
+      inArray[i] = inData[i];
+    }
+
+    this._phraseMaker.addObservation(inArray);
   }
 }
 
-export default PhraseRecorderLfo;
+// export default PhraseRecorderLfo;
