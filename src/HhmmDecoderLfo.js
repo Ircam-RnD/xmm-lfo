@@ -60,7 +60,7 @@ class HhmmDecoderLfo extends BaseLfo {
     super.onParamUpdate(name, value, metas);
 
     if (name === 'likelihoodWindow') {
-      this._decoder.likelihoodWindow = value;
+      this._decoder.setLikelihoodWindow(value);
     }
   }
 
@@ -68,13 +68,12 @@ class HhmmDecoderLfo extends BaseLfo {
   processStreamParams(prevStreamParams = {}) {
     this.prepareStreamParams(prevStreamParams);
 
-    this._decoder.model = this.params.get('model');
-    console.log(this._decoder.model);
+    this._decoder.setModel(this.params.get('model'));
 
     if (this.params.get('output') === 'likelihoods') {
-      this.streamParams.frameSize = this._decoder.nbClasses;
+      this.streamParams.frameSize = this._decoder.getNumberOfClasses();
     } else { // === 'regression'
-      this.streamParams.frameSize = this._decoder.regressionSize;
+      this.streamParams.frameSize = this._decoder.getRegressionVectorSize();
     }
 
     this.propagateStreamParams();
@@ -87,30 +86,6 @@ class HhmmDecoderLfo extends BaseLfo {
       inArray[i] = frame.data[i];
     }
 
-    // this._decoder.filter(inArray, (err, res) => {
-    //   if (err === null) {
-    //     const callback = this.params.get('callback');
-    //     // let resData;
-    //     // if (this.params.get('output') === 'likelihoods') {
-    //     //   resData = res.likelihoods;
-    //     // } else { // === 'regression'
-    //     //   resData = res.outputValues;
-    //     // }
-    //     const resData = res.likelihoods;
-    //     const data = this.frame.data;
-    //     const frameSize = this.streamParams.frameSize;
-
-    //     for (let i = 0; i < frameSize; i++) {
-    //       data[i] = resData[i];
-    //     }
-        
-    //     if (callback) {
-    //       callback(res);
-    //     }
-    //   }
-
-    //   this.propagateFrame();
-    // });
     const res = this._decoder.filter(inArray);
     const callback = this.params.get('callback');
     let outData;
@@ -131,12 +106,6 @@ class HhmmDecoderLfo extends BaseLfo {
       callback(res);
     }
   }
-
-  /** @private */
-  // processFrame(frame) {
-  //   this.prepareFrame(frame);
-  //   this.processFunction(frame);
-  // }
 };
 
 export default HhmmDecoderLfo;

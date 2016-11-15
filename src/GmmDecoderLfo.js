@@ -8,7 +8,7 @@ const definitions = {
     type: 'any',
     default: null,
     nullable: true,
-    metas: { kind: 'static' },
+    metas: { kind: 'static' }, // trigs the call to processStreamParams if changed.
   }, 
   likelihoodWindow: {
     type: 'integer',
@@ -26,7 +26,7 @@ const definitions = {
     type: 'any',
     default: null,
     nullable: true,
-    metas: { kind: 'dynamic' },
+    metas: { kind: 'dynamic' }, // doesn't trigger processStreamParams, has to be check.
   }
 };
 
@@ -47,7 +47,7 @@ class GmmDecoderLfo extends BaseLfo {
   constructor(options = {}) {
     super(definitions, options);
 
-    this._decoder = new GmmDecoder(this.params.likelihoodWindow);
+    this._decoder = new GmmDecoder(this.params.get('likelihoodWindow'));
   }
 
   /** @private */
@@ -55,7 +55,7 @@ class GmmDecoderLfo extends BaseLfo {
     super.onParamUpdate(name, value, metas);
 
     if (name === 'likelihoodWindow') {
-      this._decoder.likelihoodWindow = value;
+      this._decoder.setLikelihoodWindow(value);
     }
   }
 
@@ -63,12 +63,12 @@ class GmmDecoderLfo extends BaseLfo {
   processStreamParams(prevStreamParams = {}) {
     this.prepareStreamParams(prevStreamParams);
 
-    this._decoder.model = this.params.get('model');
+    this._decoder.setModel(this.params.get('model'));
 
     if (this.params.get('output') === 'likelihoods') {
-      this.streamParams.frameSize = this._decoder.nbClasses;
+      this.streamParams.frameSize = this._decoder.getNumberOfClasses();
     } else { // === 'regression'
-      this.streamParams.frameSize = this._decoder.regressionSize;
+      this.streamParams.frameSize = this._decoder.getRegressionVectorSize();
     }
 
     this.propagateStreamParams();
@@ -80,32 +80,6 @@ class GmmDecoderLfo extends BaseLfo {
     for (let i = 0; i < inArray.length; i++) {
       inArray[i] = frame.data[i];
     }
-
-    // this._decoder.filter(inArray, (err, res) => {
-    //   if (err === null) {
-    //     const callback = this.params.get('callback');
-
-    //     let resData;
-    //     if (this.params.get('output') === 'likelihoods') {
-    //       resData = res.likelihoods;
-    //     } else {
-    //       resData = res.regression; // this is not implemented in xmm-client !!!
-    //     }
-
-    //     const data = this.frame.data;
-    //     const frameSize = this.streamParams.frameSize;
-
-    //     for (let i = 0; i < frameSize; i++) {
-    //       data[i] = resData[i];
-    //     }
-        
-    //     if (callback) {
-    //       callback(res);
-    //     }
-    //   }
-
-    //   this.propagateFrame();
-    // });
 
     const res = this._decoder.filter(inArray);
     const callback = this.params.get('callback');
@@ -127,12 +101,6 @@ class GmmDecoderLfo extends BaseLfo {
       callback(res);
     }
   }
-
-  /** @private */
-  // processFrame(frame) {
-  //   this.prepareFrame(frame);
-  //   this.processFunction(frame);
-  // }
 };
 
 export default GmmDecoderLfo;

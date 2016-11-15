@@ -63,9 +63,7 @@ class PhraseRecorderLfo extends BaseLfo {
    * @returns {XmmPhrase}
    */
   getRecordedPhrase() {
-    // this.stop();
-    console.log(this._phraseMaker.phrase);
-    return this._phraseMaker.phrase;
+    return this._phraseMaker.getPhrase();
   }
 
   /**
