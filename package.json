@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.6.1",
-    "xmm-client": "ircam-rnd/xmm-client#v0.3.0"
+    "xmm-client": "ircam-rnd/xmm-client"
   },
   "devDependencies": {
     "babel-core": "^6.6.5",
