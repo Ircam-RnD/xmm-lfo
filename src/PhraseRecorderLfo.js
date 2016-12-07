@@ -29,7 +29,7 @@ const definitions = {
  * Lfo class using PhraseMaker class from xmm-client
  * to record input data and format it for xmm-node.
  */
-export default class PhraseRecorderLfo extends BaseLfo {
+class PhraseRecorderLfo extends BaseLfo {
   constructor(options = {}) {
     super(definitions, options);
 
@@ -63,9 +63,7 @@ export default class PhraseRecorderLfo extends BaseLfo {
    * @returns {XmmPhrase}
    */
   getRecordedPhrase() {
-    // this.stop();
-    console.log(this._phraseMaker.phrase);
-    return this._phraseMaker.phrase;
+    return this._phraseMaker.getPhrase();
   }
 
   /**
@@ -128,4 +126,4 @@ export default class PhraseRecorderLfo extends BaseLfo {
   }
 }
 
-// export default PhraseRecorderLfo;
+export default PhraseRecorderLfo;
