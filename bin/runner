@@ -4,7 +4,6 @@ var watch = require('watch');
 var path = require('path');
 var pkg = require('../package.json');
 var util = require('util');
-var sass = require('node-sass');
 
 var javascripts = require('./javascripts');
 var log = require('./log');
@@ -42,13 +41,6 @@ var browserifyOptions = {
  */
 var srcDirectory = path.join(cwd, 'src');
 var distDirectory = path.join(cwd, 'dist');
-
-// transpile css file to js string
-var sassSrcFile = 'styles.scss';
-var sassSrcDir = path.join(srcDirectory, 'sass');
-var sassEntryPoint = path.join(sassSrcDir, sassSrcFile);
-var cssDistDir = path.join(distDirectory, 'utils');
-var cssDistFile = path.join(cssDistDir, 'styles-declarations.js');
 
 /**
  * Define which file should be ignored by every command.
