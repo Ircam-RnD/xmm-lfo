@@ -14,6 +14,7 @@
     "transpile": "node ./bin/runner --transpile",
     "doc": "jsdoc -c conf.json",
     "test": "babel-tape-runner tests/*.js",
+    "prewatch": "npm run transpile",
     "watch": "node ./bin/runner --watch"
   },
   "dependencies": {
@@ -31,7 +32,6 @@
     "jsdoc-template": "ircam-jstools/jsdoc-template",
     "tape": "^4.6.3",
     "uglify-js": "^2.7.5",
-    "watch": "^1.0.1",
-    "waves-lfo": "wavesjs/waves-lfo#v1.0.0"
+    "watch": "^1.0.1"
   }
 }

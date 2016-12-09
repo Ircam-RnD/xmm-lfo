@@ -93,25 +93,19 @@ function _getJsFileList(folder, callback) {
 /**
  * Watch javascript source files.
  */
-function watchFiles(srcDirectory, distDirectory, sassEntryPoint, cssDistFile) {
+function watchFiles(srcDirectory, distDirectory) {
   watch.createMonitor(srcDirectory, watchOptions, function(monitor) {
     var transpiler = javascripts.getTranspiler(srcDirectory, distDirectory, isAllowed, babelOptions);
 
     monitor.on('created', function(filename, stats) {
       if (isAllowed(filename)) {
-        if (isSass(filename))
-          transpileCss(sassEntryPoint, cssDistFile);
-        else
-          transpiler.transpile(filename, []);
+        transpiler.transpile(filename, []);
       }
     });
 
     monitor.on('changed', function(filename, stats) {
       if (isAllowed(filename)) {
-        if (isSass(filename))
-          transpileCss(sassEntryPoint, cssDistFile);
-        else
-          transpiler.transpile(filename, []);
+        transpiler.transpile(filename, []);
       }
     });
 
@@ -146,7 +140,7 @@ switch (command) {
    * Watch the file system and transpile from es6 to es5.
    */
   case '--watch':
-    watchFiles(srcDirectory, distDirectory, sassEntryPoint, cssDistFile);
+    watchFiles(srcDirectory, distDirectory);
     break;
 
   /**
