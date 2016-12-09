@@ -1,5 +1,4 @@
-import BaseLfo from 'waves-lfo/common/core/BaseLfo';
-// import * as lfo from 'waves-lfo/client';
+import { BaseLfo } from 'waves-lfo/core';
 import { GmmDecoder } from 'xmm-client';
 
 
@@ -9,7 +8,7 @@ const definitions = {
     default: null,
     nullable: true,
     metas: { kind: 'static' }, // trigs the call to processStreamParams if changed.
-  }, 
+  },
   likelihoodWindow: {
     type: 'integer',
     default: 20,
@@ -96,7 +95,7 @@ class GmmDecoderLfo extends BaseLfo {
     for (let i = 0; i < frameSize; i++) {
       data[i] = outData[i];
     }
-    
+
     if (callback) {
       callback(res);
     }

@@ -1,5 +1,4 @@
-import BaseLfo from 'waves-lfo/common/core/BaseLfo';
-// import * as lfo from 'waves-lfo/client';
+import { BaseLfo } from 'waves-lfo/core';
 import { HhmmDecoder } from 'xmm-client';
 
 
@@ -9,7 +8,7 @@ const definitions = {
     default: null,
     nullable: true,
     metas: { kind: 'static' },
-  }, 
+  },
   likelihoodWindow: {
     type: 'integer',
     default: 20,

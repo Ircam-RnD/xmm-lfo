@@ -1,5 +1,4 @@
-import BaseLfo from 'waves-lfo/common/core/BaseLfo';
-// import * as lfo from 'waves-lfo/client';
+import { BaseLfo } from 'waves-lfo/core';
 import { PhraseMaker } from 'xmm-client';
 
 const definitions = {
