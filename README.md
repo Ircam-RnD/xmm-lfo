@@ -15,12 +15,12 @@ import * as lfo from 'waves-lfo';
 import { PhraseRecorderLfo, HhmmRecorderLfo } from 'xmm-lfo';
 
 const eventIn = new lfo.sources.EventIn({
-	frameSize: 6,
-	ctx: audioContext
+  frameSize: 6,
+  ctx: audioContext
 });
 
 const xmmRecorder = new PhraseRecorderLfo({
-	column_names: [
+  column_names: [
     'accelX', 'accelY', 'accelZ',
     'rotAlpha', 'rotBeta', 'rotGamma'
   ],
@@ -28,19 +28,19 @@ const xmmRecorder = new PhraseRecorderLfo({
 });
 
 const hhmmDecoder = new HhmmDecoderLfo({
-	likelihoodWindow: 3
+  likelihoodWindow: 3
 });
 
 eventIn.connect(xmmRecorder);
 eventIn.connect(hhmmDecoder);
 
 if (window.DeviceMotionEvent) {
-	window.addEventListener('devicemotion', function(e) {
-		eventIn.process(Date.now(), [
-			e.acceleration.x, e.acceleration.y, e.acceleration.z,
-			e.rotationRate.alpha, e.rotationRate.beta, e.rotationRate.gamma
-		]);
-	});
+  window.addEventListener('devicemotion', function(e) {
+    eventIn.process(Date.now(), [
+      e.acceleration.x, e.acceleration.y, e.acceleration.z,
+      e.rotationRate.alpha, e.rotationRate.beta, e.rotationRate.gamma
+    ]);
+  });
 }
 
 eventIn.start();
@@ -62,4 +62,4 @@ hhmmDecoder.model = someModelFromXmmNode;
 
 This library has been developed by the ISMM team at IRCAM, within the context of the RAPID-MIX project, funded by the European Union’s Horizon 2020 research and innovation programme.  
 Original XMM code authored by Jules Françoise, ported to JS and wrapped into LFO operators by Joseph Larralde.  
-See [waves-lfo](https://github.com/wavejs/waves-lfo) for LFO credits.
+See [waves-lfo](https://github.com/wavejs/waves-lfo) and [XMM](https://github.com/Ircam-RnD/xmm) for detailed credits.
