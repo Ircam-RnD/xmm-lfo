@@ -29,12 +29,6 @@ const definitions = {
 };
 
 /**
- * Callback handling the full filtering results.
- * @callback filterCallback
- * @param {Object} res - An object containing the filtering results.
- */
-
-/**
  * Lfo class loading Hierarchical HMM models created by the XMM library to
  * process an input stream of vectors (models must have been trained from the
  * same input stream).

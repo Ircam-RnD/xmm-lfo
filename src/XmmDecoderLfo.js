@@ -29,13 +29,6 @@ const definitions = {
   }
 };
 
-
-/**
- * Callback handling the full filtering results.
- * @callback filterCallback
- * @param {Object} res - An object containing the filtering results.
- */
-
 /**
  * Lfo class loading any model (GMM or HHMM) created by the xmm library and
  * automatically instantiating the corresponding decoder internally to
