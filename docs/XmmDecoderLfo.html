@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Documentation - Class: GmmDecoderLfo</title>
+    <title>Documentation - Class: XmmDecoderLfo</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -20,7 +20,7 @@
 
     <!-- if home page assume a title is already present in README -->
     
-    <h1 class="page-title">Class: GmmDecoderLfo</h1>
+    <h1 class="page-title">Class: XmmDecoderLfo</h1>
     
 
     
@@ -32,13 +32,15 @@
 
 <header>
     
-        <h2>GmmDecoderLfo</h2>
+        <h2>XmmDecoderLfo</h2>
         
-            <div class="class-description"><p>Lfo class loading GMM models created by the XMM library to process an input
-stream of vectors (models must have been trained from the same input stream).
-As the results of the classification / regression are more complex than a
-simple vector, a callback function can be passed to the constructor to handle
-them.</p></div>
+            <div class="class-description"><p>Lfo class loading any model (GMM or HHMM) created by the xmm library and
+automatically instantiating the corresponding decoder internally to
+process an input stream of vectors (models must have been trained from the
+same input stream).
+As the results of the classification / following / regression are more
+complex than a simple vector, a callback function can be passed to the
+constructor to handle them.</p></div>
         
     
 </header>
@@ -52,7 +54,7 @@ them.</p></div>
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="GmmDecoderLfo"><span class="type-signature"></span>new GmmDecoderLfo<span class="signature">(options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="XmmDecoderLfo"><span class="type-signature"></span>new XmmDecoderLfo<span class="signature">(options)</span><span class="type-signature"></span></h4>
 
     
 
@@ -169,7 +171,7 @@ them.</p></div>
                 </td>
             
 
-            <td class="description last"><p>A GMM model from the XMM library.</p></td>
+            <td class="description last"><p>Any model from the XMM library.</p></td>
         </tr>
 
     
@@ -337,7 +339,7 @@ them.</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GmmDecoderLfo.js.html">GmmDecoderLfo.js</a>, <a href="GmmDecoderLfo.js.html#line51">line 51</a>
+        <a href="XmmDecoderLfo.js.html">XmmDecoderLfo.js</a>, <a href="XmmDecoderLfo.js.html#line55">line 55</a>
     </li></ul></dd>
     
 
@@ -378,6 +380,92 @@ them.</p></div>
 
     
 
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="reset"><span class="type-signature"></span>reset<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Resets the intermediate results of the estimation if the model is a HHMM.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="XmmDecoderLfo.js.html">XmmDecoderLfo.js</a>, <a href="XmmDecoderLfo.js.html#line66">line 66</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     
 
     

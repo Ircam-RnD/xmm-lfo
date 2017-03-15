@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Documentation - Source: GmmDecoderLfo.js</title>
+    <title>Documentation - Source: XmmDecoderLfo.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -20,7 +20,7 @@
 
     <!-- if home page assume a title is already present in README -->
     
-    <h1 class="page-title">Source: GmmDecoderLfo.js</h1>
+    <h1 class="page-title">Source: XmmDecoderLfo.js</h1>
     
 
     
@@ -31,14 +31,15 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import { BaseLfo } from 'waves-lfo/core';
-import { GmmDecoder } from 'xmm-client';
+import { GmmDecoder, HhmmDecoder } from 'xmm-client';
+
 
 const definitions = {
   model: {
     type: 'any',
     default: null,
     nullable: true,
-    metas: { kind: 'static' }, // trigs the call to processStreamParams if changed.
+    metas: { kind: 'static' },
   }, 
   likelihoodWindow: {
     type: 'integer',
@@ -56,9 +57,10 @@ const definitions = {
     type: 'any',
     default: null,
     nullable: true,
-    metas: { kind: 'dynamic' }, // doesn't trigger processStreamParams, has to be check.
+    metas: { kind: 'dynamic' },
   }
 };
+
 
 /**
  * Callback handling the full filtering results.
@@ -67,24 +69,36 @@ const definitions = {
  */
 
 /**
- * Lfo class loading GMM models created by the XMM library to process an input
- * stream of vectors (models must have been trained from the same input stream).
- * As the results of the classification / regression are more complex than a
- * simple vector, a callback function can be passed to the constructor to handle
- * them.
+ * Lfo class loading any model (GMM or HHMM) created by the xmm library and
+ * automatically instantiating the corresponding decoder internally to
+ * process an input stream of vectors (models must have been trained from the
+ * same input stream).
+ * As the results of the classification / following / regression are more
+ * complex than a simple vector, a callback function can be passed to the
+ * constructor to handle them.
  * @class
  *
  * @param {Object} options - Override defaults.
- * @param {Object} [options.model=null] - A GMM model from the XMM library.
+ * @param {Object} [options.model=null] - Any model from the XMM library.
  * @param {Number} [options.likelihoodWindow=20] - Likelihood window size (smooths output).
  * @param {('likelihoods'|'regression')} [options.output='likelihoods'] - Which information to output.
  * @param {filterCallback} [options.callback=null]
- */
-class GmmDecoderLfo extends BaseLfo {
+*/
+class XmmDecoderLfo extends BaseLfo {
   constructor(options = {}) {
     super(definitions, options);
 
-    this._decoder = new GmmDecoder(this.params.get('likelihoodWindow'));
+    this._modelType = 'hhmm';
+    this._decoder = new HhmmDecoder(this.params.get('likelihoodWindow'));
+  }
+
+  /**
+   * Resets the intermediate results of the estimation if the model is a HHMM.
+   */
+  reset() {
+    if (this._modelType === 'hhmm') {
+      this._decoder.reset();
+    }
   }
 
   /** @private */
@@ -100,7 +114,18 @@ class GmmDecoderLfo extends BaseLfo {
   processStreamParams(prevStreamParams = {}) {
     this.prepareStreamParams(prevStreamParams);
 
-    this._decoder.setModel(this.params.get('model'));
+    const model = this.params.get('model');
+    const states = model.configuration.default_parameters.states;
+
+    if (states !== null &amp;&amp; states !== undefined) {
+      this._modelType = 'hhmm';
+      this._decoder = new HhmmDecoder(this.params.get('likelihoodWindow'));
+    } else {
+      this._modelType = 'gmm';
+      this._decoder = new GmmDecoder(this.params.get('likelihoodWindow'));
+    }
+
+    this._decoder.setModel(model);
 
     if (this.params.get('output') === 'likelihoods') {
       this.streamParams.frameSize = this._decoder.getNumberOfClasses();
@@ -133,14 +158,14 @@ class GmmDecoderLfo extends BaseLfo {
     for (let i = 0; i &lt; frameSize; i++) {
       data[i] = outData[i];
     }
-    
+
     if (callback) {
       callback(res);
     }
   }
 };
 
-export default GmmDecoderLfo;</code></pre>
+export default XmmDecoderLfo;</code></pre>
         </article>
     </section>
 
