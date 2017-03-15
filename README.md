@@ -6,6 +6,7 @@ and [xmm-client](https://github.com/Ircam-RnD/xmm-client).
 
 #### installation :
 
+`npm install [--save] wavesjs/waves-lfo`
 `npm install [--save] Ircam-RnD/xmm-lfo`
 
 #### es6 example :
