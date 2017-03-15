@@ -56,7 +56,7 @@ let phrase = xmmRecorder.getRecordedPhrase();
 
 // once a model has been trained by xmm-node from the recorded phrases, it can
 // be passed to the decoder like this :
-hhmmDecoder.model = someModelFromXmmNode;
+hhmmDecoder.params.set('model', someModelFromXmmLibrary);
 ```
 
 #### credits :
