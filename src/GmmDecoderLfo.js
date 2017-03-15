@@ -1,7 +1,5 @@
 import { BaseLfo } from 'waves-lfo/core';
-// import * as lfo from 'waves-lfo/client';
 import { GmmDecoder } from 'xmm-client';
-
 
 const definitions = {
   model: {
@@ -30,18 +28,25 @@ const definitions = {
   }
 };
 
+/**
+ * Callback handling the full filtering results.
+ * @callback filterCallback
+ * @param {Object} res - An object containing the filtering results.
+ */
 
 /**
- * Lfo class loading GMM models created by the xmm library to process an input
+ * Lfo class loading GMM models created by the XMM library to process an input
  * stream of vectors (models must have been trained from the same input stream).
  * As the results of the classification / regression are more complex than a
  * simple vector, a callback function can be passed to the constructor to handle
- * them, or they can alternatively be queried via the readonly filterResults
- * property.
+ * them.
+ * @class
  *
  * @param {Object} options - Override defaults.
- * @param {Object} [options.model=null] - Model comming from ...
- * @param {Object} [options.likelihoodWindow=20] - Number of lilikelihood
+ * @param {Object} [options.model=null] - A GMM model from the XMM library.
+ * @param {Number} [options.likelihoodWindow=20] - Likelihood window size (smooths output).
+ * @param {('likelihoods'|'regression')} [options.output='likelihoods'] - Which information to output.
+ * @param {filterCallback} [options.callback=null]
  */
 class GmmDecoderLfo extends BaseLfo {
   constructor(options = {}) {
