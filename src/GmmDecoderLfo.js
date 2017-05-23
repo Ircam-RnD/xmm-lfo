@@ -7,7 +7,7 @@ const definitions = {
     default: null,
     nullable: true,
     metas: { kind: 'static' }, // trigs the call to processStreamParams if changed.
-  }, 
+  },
   likelihoodWindow: {
     type: 'integer',
     default: 20,
@@ -95,7 +95,7 @@ class GmmDecoderLfo extends BaseLfo {
     for (let i = 0; i < frameSize; i++) {
       data[i] = outData[i];
     }
-    
+
     if (callback) {
       callback(res);
     }

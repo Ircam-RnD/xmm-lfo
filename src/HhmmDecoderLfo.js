@@ -7,7 +7,7 @@ const definitions = {
     default: null,
     nullable: true,
     metas: { kind: 'static' },
-  }, 
+  },
   likelihoodWindow: {
     type: 'integer',
     default: 20,

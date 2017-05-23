@@ -6,6 +6,7 @@ var pkg = require('../package.json');
 var util = require('util');
 
 var javascripts = require('./javascripts');
+var log = require('./log');
 var cwd = process.cwd();
 
 'use strict';
@@ -13,11 +14,8 @@ var cwd = process.cwd();
 /**
  * Options for babel transpiling.
  */
-var babelOptions = {
-  sourceMap: 'inline',
-  presets: ['es2015'],
-  plugins: ['transform-runtime', 'transform-es2015-modules-commonjs'],
-};
+var babelrc = fse.readFileSync(path.join(cwd, '.babelrc'));
+var babelOptions = JSON.parse(babelrc);
 
 /**
  * Options for watch.
@@ -26,7 +24,7 @@ var watchOptions = {
   ignoreDotFiles: true,
   ignoreUnreadableDir: true,
   ignoreNotPermitted: true,
-  interval: 2000, // watch internally use `fs.watchFile`
+  interval: 2, // watch internally use `fs.watchFile`
 };
 
 /**
@@ -44,13 +42,10 @@ var browserifyOptions = {
 var srcDirectory = path.join(cwd, 'src');
 var distDirectory = path.join(cwd, 'dist');
 
-var umdTarget = path.join(cwd, pkg.name + '.umd.js');
-var minTarget = path.join(cwd, pkg.name + '.min.js');
-
 /**
  * Define which file should be ignored by every command.
  */
-var allowedExtentions = /\.ejs$|\.scss$|\.js$/;
+var allowedExtentions = /\.js$/;
 var excludeFiles = /^\./; // exclude hidden files
 
 /**
@@ -82,7 +77,7 @@ function isAllowed(filename, ensureFile) {
 /**
  * Returns a list of the file in a given folder recursively.
  */
-function _getFileList(folder, callback) {
+function _getJsFileList(folder, callback) {
   var files = [];
 
   fse.walk(folder)
@@ -103,13 +98,15 @@ function watchFiles(srcDirectory, distDirectory) {
     var transpiler = javascripts.getTranspiler(srcDirectory, distDirectory, isAllowed, babelOptions);
 
     monitor.on('created', function(filename, stats) {
-      if (isAllowed(filename))
+      if (isAllowed(filename)) {
         transpiler.transpile(filename, []);
+      }
     });
 
     monitor.on('changed', function(filename, stats) {
-      if (isAllowed(filename))
+      if (isAllowed(filename)) {
         transpiler.transpile(filename, []);
+      }
     });
 
     monitor.on('removed', function(filename, stats) {
@@ -119,22 +116,10 @@ function watchFiles(srcDirectory, distDirectory) {
   });
 }
 
-
-function transpileFiles(srcDirectory, distDirectory, callback) {
-  _getFileList(srcDirectory, function(files) {
+function transpileJsFiles(srcDirectory, distDirectory, callback) {
+  _getJsFileList(srcDirectory, function(files) {
     var transpiler = javascripts.getTranspiler(srcDirectory, distDirectory, isAllowed, babelOptions);
     transpiler.transpile(undefined, files, callback);
-  });
-}
-
-function bundle(distDirectory) {
-  var entryPoint = path.join(distDirectory, 'index.js');
-  var transpiler = javascripts.getTranspiler(srcDirectory, distDirectory, isAllowed, babelOptions, browserifyOptions);
-
-  transpileFiles(srcDirectory, distDirectory, function() {
-    transpiler.bundle(entryPoint, umdTarget, function() {
-      transpiler.uglify(umdTarget, minTarget);
-    });
   });
 }
 
@@ -162,14 +147,7 @@ switch (command) {
    * Transpile all files in `src` from es6 to es5.
    */
   case '--transpile':
-    transpileFiles(srcDirectory, distDirectory);
-    break;
-
-  /**
-   * Transpile all files in `src` from es6 to es5.
-   */
-  case '--bundle':
-    bundle(distDirectory);
+    transpileJsFiles(srcDirectory, distDirectory);
     break;
 }
 
