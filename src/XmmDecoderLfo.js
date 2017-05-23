@@ -76,7 +76,7 @@ class XmmDecoderLfo extends BaseLfo {
     this.prepareStreamParams(prevStreamParams);
 
     const model = this.params.get('model');
-    const states = model.configuration.default_parameters.states;
+    const states = model ? model.configuration.default_parameters.states : null;
 
     if (states !== null && states !== undefined) {
       this._modelType = 'hhmm';
