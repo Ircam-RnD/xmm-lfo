@@ -8,7 +8,6 @@ and [xmm-client](https://github.com/Ircam-RnD/xmm-client).
 #### installation :
 
 `npm install [--save] wavesjs/waves-lfo`  
-`npm install [--save] Ircam-RnD/xmm-lfo`
 
 The application consuming the `xmm-lfo` module (aka plugin) must also import the `waves-lfo` library
 
