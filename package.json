@@ -1,6 +1,6 @@
 {
   "name": "xmm-lfo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "waves-lfo wrappers of xmm-client classes",
   "main": "dist/index.js",
   "license": "GPL-3.0",
