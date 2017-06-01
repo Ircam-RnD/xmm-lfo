@@ -84,9 +84,9 @@ class GmmDecoderLfo extends BaseLfo {
     const callback = this.params.get('callback');
     let outData;
     if (this.params.get('output') === 'likelihoods') {
-      outData = res.likelihoods;
+      outData = res ? res.likelihoods : [];
     } else {
-      outData = res.outputValues;
+      outData = res ? res.outputValues : [];
     }
 
     const data = this.frame.data;
