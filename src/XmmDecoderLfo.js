@@ -120,7 +120,7 @@ class XmmDecoderLfo extends BaseLfo {
       data[i] = outData[i];
     }
 
-    if (callback) {
+    if (callback && res) {
       callback(res);
     }
   }
